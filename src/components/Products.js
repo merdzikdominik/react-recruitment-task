@@ -9,7 +9,7 @@ const Products = ({ products }) => {
     const [productsState, setProductsState] = useState([]);
 
     const idCtx = useContext(IdContext);
-    const { contextId, contextProducts, forwardProducts } = idCtx;
+    const { contextId } = idCtx;
 
     const [pageNumber, setPageNumber] = useState(1);
     const productsPerPage = 5;
@@ -35,7 +35,7 @@ const Products = ({ products }) => {
         <section className={classes['products']}>
             <List sx={{width: '100%', justifyContent: 'space-evenly', padding: '20px 0'}}>
                 {productsState
-                .slice(pagesVisited - productsPerPage, pagesVisited + productsPerPage)
+                .slice(pagesVisited - productsPerPage, pagesVisited)
                 .filter(filterProductsHandler)
                 .map(product => 
                 <Item
