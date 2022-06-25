@@ -5,8 +5,8 @@ import AppPagination from './AppPagination';
 import { List } from '@mui/material';
 import classes from './Products.module.css';
 
-const Products = ({ products }) => {
-    const [productsState, setProductsState] = useState([]);
+const Products = () => {
+    const [products, setProducts] = useState([]);
 
     const idCtx = useContext(IdContext);
     const { contextId } = idCtx;
@@ -14,10 +14,10 @@ const Products = ({ products }) => {
     const [pageNumber, setPageNumber] = useState(1);
     const productsPerPage = 5;
     const pagesVisited = pageNumber * productsPerPage;
-    const pageCount = Math.ceil(productsState.length / productsPerPage)
+    const pageCount = Math.ceil(products.length / productsPerPage)
 
     const filterProductsHandler = product => {
-        if (contextId === 0 || contextId > productsState.length) return productsState;
+        if (contextId === 0 || contextId > products.length) return products;
         return product.id === contextId;
     }
 
@@ -28,13 +28,13 @@ const Products = ({ products }) => {
     useEffect(() => {
       fetch('https://reqres.in/api/products')
         .then(response => {return response.json()})
-        .then(fetchedData => setProductsState(fetchedData.data));
+        .then(fetchedData => setProducts(fetchedData.data));
     }, []);
 
     return (
         <section className={classes['products']}>
             <List sx={{width: '100%', justifyContent: 'space-evenly', padding: '20px 0'}}>
-                {productsState
+                {products
                 .slice(pagesVisited - productsPerPage, pagesVisited)
                 .filter(filterProductsHandler)
                 .map(product => 
