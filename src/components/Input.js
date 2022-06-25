@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { TextField, CssBaseline } from '@mui/material';
+import { TextField } from '@mui/material';
 import idContext from '../store/id-context';
-import classes from './Input.module.css';
 
 const Input = () => {
     const idCtx = useContext(idContext);
@@ -18,15 +17,17 @@ const Input = () => {
     }
 
     return (
-        <section className={classes['filter']}>
-            <CssBaseline />
-            <TextField 
-                sx={{marginTop: '20px'}}
+        <>
+            <TextField
+                sx={{
+                    marginTop: '20px',
+                    width: '100%'
+                }}
                 type="text"
                 placeholder="Search product by Id"
                 onChange={inputHandler}
             />
-        </section>
+        </>
     );
 }
 

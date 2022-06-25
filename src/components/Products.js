@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import IdContext from '../store/id-context';
 import Item from './UI/Item';
 import AppPagination from './AppPagination';
+import IdContext from '../store/id-context';
 import { List } from '@mui/material';
-import classes from './Products.module.css';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -14,7 +13,7 @@ const Products = () => {
     const [pageNumber, setPageNumber] = useState(1);
     const productsPerPage = 5;
     const pagesVisited = pageNumber * productsPerPage;
-    const pageCount = Math.ceil(products.length / productsPerPage)
+    const pageCount = Math.ceil(products.length/productsPerPage);
 
     const filterProductsHandler = product => {
         if (contextId === 0 || contextId > products.length) return products;
@@ -32,12 +31,16 @@ const Products = () => {
     }, []);
 
     return (
-        <section className={classes['products']}>
-            <List sx={{width: '100%', justifyContent: 'space-evenly', padding: '20px 0'}}>
+        <>
+            <List 
+                sx={{
+                    width: '100%', 
+                    padding: '0'
+                }}>
                 {products
                 .slice(pagesVisited - productsPerPage, pagesVisited)
                 .filter(filterProductsHandler)
-                .map(product => 
+                .map(product =>
                 <Item
                     key={product.id}
                     id={product.id}
@@ -46,12 +49,12 @@ const Products = () => {
                     color={product.color}
                 />)}
             </List>
-            <AppPagination 
+            <AppPagination
                 count={pageCount}
                 page={pageNumber}
                 onChange={changePageHandler}
             />
-        </section>
+        </>
     );
 }
 
